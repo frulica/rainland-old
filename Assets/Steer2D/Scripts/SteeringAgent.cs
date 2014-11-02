@@ -60,12 +60,22 @@ namespace Steer2D
 			RaycastHit2D hit = Physics2D.Raycast(possiblePosition, -Vector2.up,  Mathf.Infinity, mask);
 			if (hit.collider != null) 
 			{
-				distanceToGround = hit.fraction;
-				Debug.Log ("distance: " + distanceToGround);
+				distanceToGround = possiblePosition.y - hit.point.y;
+				//Debug.Log ("distance: " + distanceToGround);
 				if (distanceToGround > maxDistToGround)
-					possiblePosition.y = hit.transform.position.y + maxDistToFleeTarget;
+				{
+					float maxPosY = hit.point.y + maxDistToGround;
+					float excessYMovement = possiblePosition.y -  maxPosY; // firefly went too far on y, so we gonna put it in x coordinate
+					possiblePosition.y = maxPosY;
+					possiblePosition.x = possiblePosition.x + excessYMovement;
+				}
 				if (distanceToGround < minDistToGround)
-					possiblePosition.y = hit.transform.position.y + minDistToFleeTarget;
+				{
+					float maxPosY = hit.point.y + maxDistToGround;
+					float excessYMovement = possiblePosition.y -  maxPosY; // firefly went too far on y, so we gonna put it in x coordinate
+					possiblePosition.y = hit.point.y + minDistToGround;
+					possiblePosition.x = possiblePosition.x + excessYMovement;
+				}
 			}
 
 			transform.position = possiblePosition;
