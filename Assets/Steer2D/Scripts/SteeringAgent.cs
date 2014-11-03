@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 
 namespace Steer2D
@@ -9,15 +9,20 @@ namespace Steer2D
         public float Mass = 10;
         public float Friction = .05f;
         public bool RotateSprite = true;
-
-		public float maxDistToGround = 2.0f;
-		public float minDistToGround = 0.5f;
 		public LayerMask mask;
+		public float minDistToGround = 0.5f;
+		public PlatformerCharacter2D player;
 
 		float distanceToGround = 0;
 
         [HideInInspector]
         public Vector2 CurrentVelocity;
+
+		float PlayerMinY;
+		float GroundMinY;
+
+		float minY;
+		float maxY;
 
         public static List<SteeringAgent> AgentList = new List<SteeringAgent>();
 
@@ -38,8 +43,20 @@ namespace Steer2D
             AgentList.Add(this);
         }
 
+		void setMinMaxY(RaycastHit2D hit) {
+			PlayerMinY = player.transform.position.y - player.renderer.bounds.size.y; 
+
+			GroundMinY = hit.point.y + minDistToGround;
+
+			if (!player.falling) {
+				minY = (PlayerMinY > GroundMinY) ? PlayerMinY : GroundMinY;
+				maxY = player.transform.position.y + 1; // TODO: get top of sprite y coordinate, instead of pivot
+			}
+		}
+
         void Update()
         {
+
             Vector2 acceleration = Vector2.zero;
 
             foreach (SteeringBehaviour behaviour in behaviours)
@@ -57,24 +74,21 @@ namespace Steer2D
 
 			Vector2 possiblePosition = transform.position + (Vector3)CurrentVelocity * Time.deltaTime;
 
-			RaycastHit2D hit = Physics2D.Raycast(possiblePosition, -Vector2.up,  Mathf.Infinity, mask);
+			// check with min/may Y position
+			RaycastHit2D hit = Physics2D.Raycast(possiblePosition, -Vector2.up,  5.0f, mask);
 			if (hit.collider != null) 
 			{
+				setMinMaxY(hit);
+				
 				distanceToGround = possiblePosition.y - hit.point.y;
 				//Debug.Log ("distance: " + distanceToGround);
-				if (distanceToGround > maxDistToGround)
+				if (possiblePosition.y > maxY )  // check with max y height relative to player
 				{
-					float maxPosY = hit.point.y + maxDistToGround;
-					float excessYMovement = possiblePosition.y -  maxPosY; // firefly went too far on y, so we gonna put it in x coordinate
-					possiblePosition.y = maxPosY;
-					possiblePosition.x = possiblePosition.x + excessYMovement;
+					possiblePosition.y = maxY;
 				}
-				if (distanceToGround < minDistToGround)
+				if (distanceToGround < minY)
 				{
-					float maxPosY = hit.point.y + maxDistToGround;
-					float excessYMovement = possiblePosition.y -  maxPosY; // firefly went too far on y, so we gonna put it in x coordinate
-					possiblePosition.y = hit.point.y + minDistToGround;
-					possiblePosition.x = possiblePosition.x + excessYMovement;
+					possiblePosition.y = minY;
 				}
 			}
 

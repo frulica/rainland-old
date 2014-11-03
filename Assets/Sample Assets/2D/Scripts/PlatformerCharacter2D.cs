@@ -20,6 +20,8 @@ public class PlatformerCharacter2D : MonoBehaviour
 	float ceilingRadius = .01f;							// Radius of the overlap circle to determine if the player can stand up
 	Animator anim;										// Reference to the player's animator component.
 
+	public bool falling = false;
+
 
     void Awake()
 	{
@@ -67,6 +69,10 @@ public class PlatformerCharacter2D : MonoBehaviour
 
 			// Move the character
 			rigidbody2D.velocity = new Vector2(move * maxSpeed, rigidbody2D.velocity.y);
+			if (rigidbody2D.velocity.y < 0 && !grounded)
+				falling = true;
+			else
+				falling = false;
 			
 			// If the input is moving the player right and the player is facing left...
 			if(move > 0 && !facingRight)
