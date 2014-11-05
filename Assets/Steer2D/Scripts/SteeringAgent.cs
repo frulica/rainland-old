@@ -49,7 +49,7 @@ namespace Steer2D
 			GroundMinY = hit.point.y + minDistToGround;
 
 			if (!player.falling) {
-				minY = (PlayerMinY > GroundMinY) ? PlayerMinY : GroundMinY;
+				minY = GroundMinY; //(PlayerMinY > GroundMinY) ? PlayerMinY : GroundMinY;
 				maxY = player.transform.position.y + 1; // TODO: get top of sprite y coordinate, instead of pivot
 			}
 		}
@@ -80,13 +80,12 @@ namespace Steer2D
 			{
 				setMinMaxY(hit);
 				
-				distanceToGround = possiblePosition.y - hit.point.y;
 				//Debug.Log ("distance: " + distanceToGround);
 				if (possiblePosition.y > maxY )  // check with max y height relative to player
 				{
 					possiblePosition.y = maxY;
 				}
-				if (distanceToGround < minY)
+				if (possiblePosition.y < minY)
 				{
 					possiblePosition.y = minY;
 				}
