@@ -13,8 +13,6 @@ namespace Steer2D
 		public float minDistToGround = 0.5f;
 		public PlatformerCharacter2D player;
 
-		float distanceToGround = 0;
-
         [HideInInspector]
         public Vector2 CurrentVelocity;
 
