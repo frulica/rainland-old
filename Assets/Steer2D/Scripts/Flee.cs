@@ -11,12 +11,16 @@ namespace Steer2D
 
         public override Vector2 GetVelocity()
         {
-			float distance = Vector3.Distance(transform.position, FleeFrom.position);
+			if (FleeFrom != null) {
+				float distance = Vector3.Distance(transform.position, FleeFrom.position);
+				
+				if (distance < FleeRadius) 
+					return -((((Vector2)FleeFrom.position - (Vector2)transform.position).normalized * agent.MaxVelocity) - agent.CurrentVelocity);
+				else
+					return Vector2.zero;
+			}
 
-            if (distance < FleeRadius) 
-				return -((((Vector2)FleeFrom.position - (Vector2)transform.position).normalized * agent.MaxVelocity) - agent.CurrentVelocity);
-            else
-                return Vector2.zero;
+			return Vector2.zero;
         }
 
         void OnDrawGizmos()

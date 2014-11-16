@@ -9,22 +9,24 @@ public class OneWayScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		platform.enabled = !oneWay; 
+		//platform.enabled = !oneWay; 
 	}
 	
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		oneWay = true;
+		//oneWay = true;
+		Physics2D.IgnoreCollision(this.platform, other);
 	}
 	
 	void OnTriggerStay2D(Collider2D other)
 	{
-		oneWay = true;
+		//oneWay = true;
 	}
 	
 	void OnTriggerExit2D(Collider2D other)
 	{
-		oneWay = false;
+		//oneWay = false;
+		Physics2D.IgnoreCollision(this.platform, other, false);
 	}
 
 }
