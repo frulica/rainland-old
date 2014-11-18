@@ -5,22 +5,18 @@ namespace Steer2D
 {
     public class Flee : SteeringBehaviour
     {
-        public Transform FleeFrom;
+        public Vector2 TargetPoint = Vector2.zero;
         public float FleeRadius = 1;
         public bool DrawGizmos = false;
 
         public override Vector2 GetVelocity()
         {
-			if (FleeFrom != null) {
-				float distance = Vector3.Distance(transform.position, FleeFrom.position);
-				
-				if (distance < FleeRadius) 
-					return -((((Vector2)FleeFrom.position - (Vector2)transform.position).normalized * agent.MaxVelocity) - agent.CurrentVelocity);
-				else
-					return Vector2.zero;
-			}
+            float distance = Vector3.Distance(transform.position, TargetPoint);
 
-			return Vector2.zero;
+            if (distance < FleeRadius)
+                return -(((TargetPoint - (Vector2)transform.position).normalized * agent.MaxVelocity) - agent.CurrentVelocity);
+            else
+                return Vector2.zero;
         }
 
         void OnDrawGizmos()
@@ -28,7 +24,7 @@ namespace Steer2D
             if (DrawGizmos)
             {
                 Gizmos.color = Color.blue;
-				Gizmos.DrawWireSphere(FleeFrom.position, FleeRadius);
+                Gizmos.DrawWireSphere(TargetPoint, FleeRadius);
             }
         }
     }

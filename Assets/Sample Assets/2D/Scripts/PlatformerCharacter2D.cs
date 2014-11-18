@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class PlatformerCharacter2D : MonoBehaviour 
 {
@@ -19,8 +20,13 @@ public class PlatformerCharacter2D : MonoBehaviour
 	Transform ceilingCheck;								// A position marking where to check for ceilings
 	float ceilingRadius = .01f;							// Radius of the overlap circle to determine if the player can stand up
 	Animator anim;										// Reference to the player's animator component.
+	public Transform respawnPoint;
+	public Queue spawnHistory = new Queue();
+	int spawnStepback = 30;
+
 
 	public bool falling = false;
+
 
 
     void Awake()
@@ -90,6 +96,14 @@ public class PlatformerCharacter2D : MonoBehaviour
             anim.SetBool("Ground", false);
             rigidbody2D.AddForce(new Vector2(0f, jumpForce));
         }
+
+		// update the respawn point
+		if (grounded && rigidbody2D.velocity.magnitude > 2) {
+			spawnHistory.Enqueue(rigidbody2D.transform.position);
+			//Debug.Log("putting: " + rigidbody2D.transform.position);
+			if (spawnHistory.Count > spawnStepback)
+				spawnHistory.Dequeue();
+		}
 	}
 
 	

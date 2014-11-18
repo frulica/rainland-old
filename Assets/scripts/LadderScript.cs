@@ -8,12 +8,10 @@ public class LadderScript : MonoBehaviour {
 
 	bool onLadder, canClimb;
 	float speed = 10f;
-	PlatformerCharacter2D platformerCharacter;
 	float oldGravity;
 	
 	void Start() {
 		player.rigidbody2D.isKinematic = false;
-		platformerCharacter = player.GetComponent<PlatformerCharacter2D>();
 		oldGravity = player.rigidbody2D.gravityScale;
 	}
 	
