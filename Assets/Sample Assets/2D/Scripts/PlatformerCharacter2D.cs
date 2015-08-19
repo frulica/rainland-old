@@ -45,7 +45,7 @@ public class PlatformerCharacter2D : MonoBehaviour
 		anim.SetBool("Ground", grounded);
 
 		// Set the vertical animation
-		anim.SetFloat("vSpeed", rigidbody2D.velocity.y);
+		anim.SetFloat("vSpeed", GetComponent<Rigidbody2D>().velocity.y);
 	}
 
 
@@ -74,8 +74,8 @@ public class PlatformerCharacter2D : MonoBehaviour
 			anim.SetFloat("Speed", Mathf.Abs(move));
 
 			// Move the character
-			rigidbody2D.velocity = new Vector2(move * maxSpeed, rigidbody2D.velocity.y);
-			if (rigidbody2D.velocity.y < 0 && !grounded)
+			GetComponent<Rigidbody2D>().velocity = new Vector2(move * maxSpeed, GetComponent<Rigidbody2D>().velocity.y);
+			if (GetComponent<Rigidbody2D>().velocity.y < 0 && !grounded)
 				falling = true;
 			else
 				falling = false;
@@ -94,12 +94,12 @@ public class PlatformerCharacter2D : MonoBehaviour
         if (grounded && jump) {
             // Add a vertical force to the player.
             anim.SetBool("Ground", false);
-            rigidbody2D.AddForce(new Vector2(0f, jumpForce));
+            GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, jumpForce));
         }
 
 		// update the respawn point
-		if (grounded && rigidbody2D.velocity.magnitude > 2) {
-			spawnHistory.Enqueue(rigidbody2D.transform.position);
+		if (grounded && GetComponent<Rigidbody2D>().velocity.magnitude > 2) {
+			spawnHistory.Enqueue(GetComponent<Rigidbody2D>().transform.position);
 			//Debug.Log("putting: " + rigidbody2D.transform.position);
 			if (spawnHistory.Count > spawnStepback)
 				spawnHistory.Dequeue();

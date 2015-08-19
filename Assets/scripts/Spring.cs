@@ -20,8 +20,8 @@ public class Spring : MonoBehaviour {
 	{
 		if (!alreadyBounced)
 		{
-			other.rigidbody2D.velocity = new Vector2(0, 0);
-			other.rigidbody2D.AddForce(new Vector2 (0, force));
+			other.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+			other.GetComponent<Rigidbody2D>().AddForce(new Vector2 (0, force));
 			alreadyBounced = true;
 		}
 	}

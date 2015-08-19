@@ -891,7 +891,7 @@ public class Ferr2DT_PathTerrain : MonoBehaviour, Ferr2D_IPath {
                     aMaterial.fillMaterial
                 };
             }
-            renderer.sharedMaterials = newMaterials;
+            GetComponent<Renderer>().sharedMaterials = newMaterials;
 
             // make sure we update the units per UV
             if (terrainMaterial.edgeMaterial != null && terrainMaterial.edgeMaterial.mainTexture != null) {

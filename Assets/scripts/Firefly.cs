@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
+
 namespace Steer2D
 {
     public class Firefly : SteeringBehaviour 
@@ -54,5 +55,13 @@ namespace Steer2D
                 Gizmos.DrawWireSphere((Vector3)TargetPoint, StopRadius);
             }
         }
+
+		void OnTriggerEnter2D(Collider2D other)
+		{
+			if (other.transform == triggerObject){
+				Destroy(this.gameObject);
+				GameObject.Find("Player").GetComponent<PlayerAudio>().Cheer();
+			}
+		}
     }
 }

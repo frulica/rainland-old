@@ -30,6 +30,8 @@ public class Tiling : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+
 		// does it still need buddies? If not do nothing
 		if (hasALeftBuddy == false || hasARightBuddy == false) {
 			// calculate the cameras extend (half the width) of what the camera can see in world coordinates

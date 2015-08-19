@@ -11,8 +11,8 @@ public class LadderScript : MonoBehaviour {
 	float oldGravity;
 	
 	void Start() {
-		player.rigidbody2D.isKinematic = false;
-		oldGravity = player.rigidbody2D.gravityScale;
+		player.GetComponent<Rigidbody2D>().isKinematic = false;
+		oldGravity = player.GetComponent<Rigidbody2D>().gravityScale;
 	}
 	
 	void Update () {
@@ -33,6 +33,7 @@ public class LadderScript : MonoBehaviour {
 	
 	void OnTriggerStay2D(Collider2D other)
 	{
+		Debug.Log ("STAY");
 		if (Input.GetKey (KeyCode.UpArrow)) 
 		{
 			ClimbMode();
@@ -40,7 +41,8 @@ public class LadderScript : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other)
-	{Debug.Log ("in");
+	{
+		Debug.Log ("IN");
 		if (Input.GetKey (KeyCode.UpArrow)) 
 		{
 			ClimbMode();
@@ -52,15 +54,15 @@ public class LadderScript : MonoBehaviour {
 	{
 		//exit climb mode
 		onLadder = false;
-		player.rigidbody2D.gravityScale = oldGravity;
+		player.GetComponent<Rigidbody2D>().gravityScale = oldGravity;
 		Debug.Log ("OUT");
 	}
 
 	void ClimbMode()
 	{
 		onLadder = true;
-		player.rigidbody2D.gravityScale = 0;
-		player.rigidbody2D.velocity = Vector2.zero;
+		player.GetComponent<Rigidbody2D>().gravityScale = 0;
+		player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
 
 	}
 	

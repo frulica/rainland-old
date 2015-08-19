@@ -1,0 +1,160 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1343\cocoasubrtf160
+{\fonttbl\f0\froman\fcharset0 Times-Roman;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720
+
+\f0\fs24 \cf2 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 DELIMITER ;;\
+CREATE DEFINER=`homeexchange`@`localhost` PROCEDURE `location_count_update_tree`(IN in_location_id INT(10))\
+BEGIN\
+    DECLARE parent_id INT;\
+    DECLARE continent_id INT;\
+    DECLARE country_id INT;\
+    DECLARE aal1_id INT;\
+    DECLARE aal2_id INT;\
+    DECLARE locality_id INT;\
+    DECLARE locality2_id INT;\
+    DECLARE sublocality_id INT;\
+    DECLARE sublocality2_id INT;\
+    SELECT\
+      `parent_id`,\
+      `continent_id`,\
+      `country_id`,\
+      `aal1_id`,\
+      `aal2_id`,\
+      `locality_id`,\
+      `locality2_id`,\
+      `sublocality_id`,\
+      `sublocality2_id`\
+    INTO\
+      parent_id, continent_id, country_id, aal1_id, aal2_id, locality_id, locality2_id, sublocality_id, sublocality2_id\
+    FROM `location`\
+    WHERE `id` = in_location_id;\
+    CALL `location_visible_listing_count_update`(in_location_id);\
+    CALL `location_total_listing_count_update`(in_location_id);\
+    IF (continent_id IS NOT NULL)\
+    THEN\
+      CALL `location_visible_listing_count_update`(continent_id);\
+      CALL `location_total_listing_count_update`(continent_id);\
+    END IF;\
+    IF (country_id IS NOT NULL)\
+    THEN\
+      CALL `location_visible_listing_count_update`(country_id);\
+      CALL `location_total_listing_count_update`(country_id);\
+    END IF;\
+    IF (aal1_id IS NOT NULL)\
+    THEN\
+      CALL `location_visible_listing_count_update`(aal1_id);\
+      CALL `location_total_listing_count_update`(aal1_id);\
+    END IF;\
+    IF (aal2_id IS NOT NULL)\
+    THEN\
+      CALL `location_visible_listing_count_update`(aal2_id);\
+      CALL `location_total_listing_count_update`(aal2_id);\
+    END IF;\
+    IF (locality_id IS NOT NULL)\
+    THEN\
+      CALL `location_visible_listing_count_update`(locality_id);\
+      CALL `location_total_listing_count_update`(locality_id);\
+    END IF;\
+    IF (locality2_id IS NOT NULL)\
+    THEN\
+      CALL `location_visible_listing_count_update`(locality2_id);\
+      CALL `location_total_listing_count_update`(locality2_id);\
+    END IF;\
+    IF (sublocality_id IS NOT NULL)\
+    THEN\
+      CALL `location_visible_listing_count_update`(sublocality_id);\
+      CALL `location_total_listing_count_update`(sublocality_id);\
+    END IF;\
+    IF (sublocality2_id IS NOT NULL)\
+    THEN\
+      CALL `location_visible_listing_count_update`(sublocality2_id);\
+      CALL `location_total_listing_count_update`(sublocality2_id);\
+    END IF;\
+  END;;\
+DELIMITER ;\
+\
+\
+\
+DELIMITER ;;\
+CREATE DEFINER=`homeexchange`@`localhost` PROCEDURE `location_total_listing_count_update`(IN in_location_id INT(10))\
+BEGIN\
+/* get count from all locations types */\
+    SET @count = (\
+      SELECT\
+        COUNT(1)\
+      FROM listing\
+        JOIN location\
+          ON listing.location_id = location.id\
+        JOIN `user`\
+          ON listing.user_id = user.id\
+      WHERE\
+        (\
+          location.id = in_location_id OR\
+          location.continent_id = in_location_id OR\
+          location.continent_id = in_location_id OR\
+          location.country_id = in_location_id OR\
+          location.aal1_id = in_location_id OR\
+          location.aal2_id = in_location_id OR\
+          location.locality_id = in_location_id OR\
+          location.locality2_id = in_location_id OR\
+          location.sublocality_id = in_location_id OR\
+          location.sublocality2_id = in_location_id\
+        )\
+    );\
+/* store it */\
+    UPDATE `location`\
+    SET `total_listing_count` = @count\
+    WHERE `id` = in_location_id;\
+  END;;\
+DELIMITER ;\
+\
+\
+DELIMITER ;;\
+CREATE DEFINER=`homeexchange`@`localhost` PROCEDURE `location_visible_listing_count_update`(IN in_location_id INT(10))\
+BEGIN\
+/* get count from all locations types */\
+    SET @count = (\
+      SELECT\
+        COUNT(1)\
+      FROM listing\
+        JOIN location\
+          ON listing.location_id = location.id\
+        JOIN `user`\
+          ON listing.user_id = user.id\
+      WHERE\
+        (\
+          listing.active = 1 AND\
+          listing.visible = 1 AND\
+          listing.deleted = 0\
+        )\
+        AND\
+        (\
+          user.deleted = 0 AND\
+          user.disabled = 0\
+        )\
+        AND\
+        (\
+          location.id = in_location_id OR\
+          location.continent_id = in_location_id OR\
+          location.continent_id = in_location_id OR\
+          location.country_id = in_location_id OR\
+          location.aal1_id = in_location_id OR\
+          location.aal2_id = in_location_id OR\
+          location.locality_id = in_location_id OR\
+          location.locality2_id = in_location_id OR\
+          location.sublocality_id = in_location_id OR\
+          location.sublocality2_id = in_location_id\
+        )\
+    );\
+/* store it */\
+    UPDATE `location`\
+    SET `visible_listing_count` = @count\
+    WHERE `id` = in_location_id;\
+  END;;\
+DELIMITER ;\
+\
+}
