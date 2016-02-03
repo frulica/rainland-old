@@ -23,6 +23,7 @@ Assets/Ferr/2DTerrain/TerrainMaterials/SandTerrainMaterial.prefab
 Assets/tiles/Spring.prefab
 Assets/prefabs/Ladder.prefab
 Assets/prefabs/Firefly.prefab
+Assets/prefabs/FireflyJar.prefab
 
 [Ferr2DT_PathTerrain]
 Assets/_GM.prefab
@@ -48,3 +49,4 @@ Assets/Ferr/2DTerrain/TerrainMaterials/SandTerrainMaterial.prefab
 Assets/tiles/Spring.prefab
 Assets/prefabs/Ladder.prefab
 Assets/prefabs/Firefly.prefab
+Assets/prefabs/FireflyJar.prefab

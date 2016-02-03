@@ -60,8 +60,10 @@ namespace Steer2D
 		{
 			if (other.transform == triggerObject){
 				Destroy(this.gameObject);
-				GameObject.Find("Player").GetComponent<PlayerAudio>().Cheer();
-			}
+                GameObject.Find("Player").GetComponent<PlayerAudio>().Cheer();
+                GameObject.Find("FireflyJar").GetComponent<fireflyJar>().addFly();
+                Debug.Log("yay");
+            } 
 		}
     }
 }

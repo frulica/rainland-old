@@ -1,6 +1,28 @@
 fileFormatVersion: 2
 guid: 163d30923c4e2487dbb07b6a11067e7c
 TextureImporter:
+  fileIDToRecycleName:
+    21300000: lucas_idle_0
+    21300002: lucas_idle_1
+    21300004: lucas_idle_2
+    21300006: lucas_idle_3
+    21300008: lucas_4
+    21300010: lucas_5
+    21300012: lucas_6
+    21300014: lucas_7
+    21300016: lucas_8
+    21300018: lucas_9
+    21300020: lucas_10
+    21300022: lucas_11
+    21300024: lucas_jump_12
+    21300026: lucas_jump_13
+    21300028: lucas_jump_14
+    21300030: lucas_jump_15
+    21300032: lucas_jump_16
+    21300034: lucas_jump_17
+    21300036: lucas_jump_18
+    21300038: lucas_jump_19
+    21300040: lucas_jump_20
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -19,6 +41,9 @@ TextureImporter:
   isReadable: 0
   grayScaleToAlpha: 0
   generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
   textureFormat: -1
   maxTextureSize: 1024
@@ -29,7 +54,9 @@ TextureImporter:
     wrapMode: 1
   nPOTScale: 0
   lightmap: 0
+  rGBM: 0
   compressionQuality: 50
+  allowsAlphaSplitting: 0
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
@@ -254,3 +281,5 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
+  assetBundleName: 
+  assetBundleVariant: 
