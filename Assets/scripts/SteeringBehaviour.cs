@@ -12,7 +12,7 @@ namespace Steer2D
 
         public abstract Vector2 GetVelocity();
 
-		void Start () {
+		public void Start () {
             agent = GetComponent<SteeringAgent>();
             agent.RegisterSteeringBehaviour(this);
 		}

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class fireflyJar : MonoBehaviour {
+public class FireflyJar : MonoBehaviour {
 
     public int fly_count;
     public int max_fly_count;
@@ -18,7 +18,6 @@ public class fireflyJar : MonoBehaviour {
 
     public void addFly()
     {
-        this.fly_count++;
         Light lt = GetComponent<Light>();
 
         if(fly_count < max_fly_count)

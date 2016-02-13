@@ -6,16 +6,25 @@ namespace Steer2D
 {
     public class Firefly : SteeringBehaviour 
     {
-		public Transform triggerObject;
+		Transform triggerObject;
 		public float FleeRadius = 1;
 		Vector2 AnchorPoint = Vector2.zero;
 
-        public Vector2 TargetPoint = Vector2.zero;
+        Vector2 TargetPoint = Vector2.zero;
         public float SlowRadius = 0.5f;
         public float StopRadius = 0.2f;
 		public float roamRadius = 2f;
 		public float roamTriggerDistance = 0.3f;
         public bool DrawGizmos = false;
+
+        void Start()
+        {
+            base.Start();
+            AnchorPoint = this.transform.position;
+            TargetPoint = this.transform.position;
+
+            triggerObject = GameObject.Find("Player").transform;
+        }
 
         public override Vector2 GetVelocity()
         {
@@ -26,9 +35,10 @@ namespace Steer2D
 
 			float fleeDistance = Vector3.Distance(transform.position, (Vector3)triggerObject.position);
 
+
 			if (fleeDistance < FleeRadius)
 			{
-				AnchorPoint = new Vector2();
+				AnchorPoint =  this.transform.position;
 			}
 			else 
 			{
@@ -61,8 +71,7 @@ namespace Steer2D
 			if (other.transform == triggerObject){
 				Destroy(this.gameObject);
                 GameObject.Find("Player").GetComponent<PlayerAudio>().Cheer();
-                GameObject.Find("FireflyJar").GetComponent<fireflyJar>().addFly();
-                Debug.Log("yay");
+                triggerObject.Find("Items/FireflyJar").GetComponent<FireflyJar>().addFly();
             } 
 		}
     }
