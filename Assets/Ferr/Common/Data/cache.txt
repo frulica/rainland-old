@@ -27,6 +27,14 @@ Assets/prefabs/Spring.prefab
 Assets/prefabs/Firefly.prefab
 Assets/prefabs/background/bush_1.prefab
 Assets/prefabs/background/bush_2.prefab
+Assets/Narrate/Demos/3DDemo/MaterialsAndModels/Tree.prefab
+Assets/Narrate/Demos/3DDemo/MaterialsAndModels/key.prefab
+Assets/Narrate/Demos/3DDemo/Tree.prefab
+Assets/Narrate/Prefabs/NarrationSystem.prefab
+Assets/Narrate/Demos/2DDemo/sand.prefab
+Assets/Narrate/Prefabs/SubtitleManager.prefab
+Assets/Narrate/Demos/2DDemo/cliff.prefab
+Assets/Narrate/Prefabs/2DNarrationSystem.prefab
 
 [Ferr2DT_PathTerrain]
 Assets/_GM.prefab
@@ -56,3 +64,11 @@ Assets/prefabs/Spring.prefab
 Assets/prefabs/Firefly.prefab
 Assets/prefabs/background/bush_1.prefab
 Assets/prefabs/background/bush_2.prefab
+Assets/Narrate/Demos/3DDemo/MaterialsAndModels/Tree.prefab
+Assets/Narrate/Demos/3DDemo/MaterialsAndModels/key.prefab
+Assets/Narrate/Demos/3DDemo/Tree.prefab
+Assets/Narrate/Prefabs/NarrationSystem.prefab
+Assets/Narrate/Demos/2DDemo/sand.prefab
+Assets/Narrate/Prefabs/SubtitleManager.prefab
+Assets/Narrate/Demos/2DDemo/cliff.prefab
+Assets/Narrate/Prefabs/2DNarrationSystem.prefab

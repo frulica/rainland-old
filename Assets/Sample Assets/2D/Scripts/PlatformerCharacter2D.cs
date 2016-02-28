@@ -23,6 +23,7 @@ public class PlatformerCharacter2D : MonoBehaviour
 	public Transform respawnPoint;
 	public Queue spawnHistory = new Queue();
 	int spawnStepback = 30;
+	bool enabled = true;
 
 
 	public bool falling = false;
@@ -51,58 +52,56 @@ public class PlatformerCharacter2D : MonoBehaviour
 
 	public void Move(float move, bool crouch, bool jump)
 	{
+		if (enabled) {
+				// If crouching, check to see if the character can stand up
+				if (!crouch && anim.GetBool ("Crouch")) {
+						// If the character has a ceiling preventing them from standing up, keep them crouching
+						if (Physics2D.OverlapCircle (ceilingCheck.position, ceilingRadius, whatIsGround))
+								crouch = true;
+				}
 
+				// Set whether or not the character is crouching in the animator
+				anim.SetBool ("Crouch", crouch);
 
-		// If crouching, check to see if the character can stand up
-		if(!crouch && anim.GetBool("Crouch"))
-		{
-			// If the character has a ceiling preventing them from standing up, keep them crouching
-			if( Physics2D.OverlapCircle(ceilingCheck.position, ceilingRadius, whatIsGround))
-				crouch = true;
-		}
+				//only control the player if grounded or airControl is turned on
+				if (grounded || airControl) {
+						// Reduce the speed if crouching by the crouchSpeed multiplier
+						move = (crouch ? move * crouchSpeed : move);
 
-		// Set whether or not the character is crouching in the animator
-		anim.SetBool("Crouch", crouch);
+						// The Speed animator parameter is set to the absolute value of the horizontal input.
+						anim.SetFloat ("Speed", Mathf.Abs (move));
 
-		//only control the player if grounded or airControl is turned on
-		if(grounded || airControl)
-		{
-			// Reduce the speed if crouching by the crouchSpeed multiplier
-			move = (crouch ? move * crouchSpeed : move);
+						// Move the character
+						GetComponent<Rigidbody2D> ().velocity = new Vector2 (move * maxSpeed, GetComponent<Rigidbody2D> ().velocity.y);
+						if (GetComponent<Rigidbody2D> ().velocity.y < 0 && !grounded)
+								falling = true;
+						else
+								falling = false;
+		
+						// If the input is moving the player right and the player is facing left...
+						if (move > 0 && !facingRight)
+			// ... flip the player.
+			Flip ();
+		// Otherwise if the input is moving the player left and the player is facing right...
+		else if (move < 0 && facingRight)
+			// ... flip the player.
+			Flip ();
+				}
 
-			// The Speed animator parameter is set to the absolute value of the horizontal input.
-			anim.SetFloat("Speed", Mathf.Abs(move));
+				// If the player should jump...
+				if (grounded && jump) {
+						// Add a vertical force to the player.
+						anim.SetBool ("Ground", false);
+						GetComponent<Rigidbody2D> ().AddForce (new Vector2 (0f, jumpForce));
+				}
 
-			// Move the character
-			GetComponent<Rigidbody2D>().velocity = new Vector2(move * maxSpeed, GetComponent<Rigidbody2D>().velocity.y);
-			if (GetComponent<Rigidbody2D>().velocity.y < 0 && !grounded)
-				falling = true;
-			else
-				falling = false;
-			
-			// If the input is moving the player right and the player is facing left...
-			if(move > 0 && !facingRight)
-				// ... flip the player.
-				Flip();
-			// Otherwise if the input is moving the player left and the player is facing right...
-			else if(move < 0 && facingRight)
-				// ... flip the player.
-				Flip();
-		}
-
-        // If the player should jump...
-        if (grounded && jump) {
-            // Add a vertical force to the player.
-            anim.SetBool("Ground", false);
-            GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, jumpForce));
-        }
-
-		// update the respawn point
-		if (grounded && GetComponent<Rigidbody2D>().velocity.magnitude > 2) {
-			spawnHistory.Enqueue(GetComponent<Rigidbody2D>().transform.position);
-			//Debug.Log("putting: " + rigidbody2D.transform.position);
-			if (spawnHistory.Count > spawnStepback)
-				spawnHistory.Dequeue();
+				// update the respawn point
+				if (grounded && GetComponent<Rigidbody2D> ().velocity.magnitude > 2) {
+						spawnHistory.Enqueue (GetComponent<Rigidbody2D> ().transform.position);
+						//Debug.Log("putting: " + rigidbody2D.transform.position);
+						if (spawnHistory.Count > spawnStepback)
+								spawnHistory.Dequeue ();
+				}
 		}
 	}
 
