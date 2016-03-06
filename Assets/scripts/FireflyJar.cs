@@ -6,15 +6,8 @@ public class FireflyJar : MonoBehaviour {
     public int fly_count;
     public int max_fly_count;
     public float intensity_increase = 0.5f;
-    // Use this for initialization
-    void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
+    public DimLights dl;
 
     public void addFly()
     {
@@ -25,6 +18,7 @@ public class FireflyJar : MonoBehaviour {
             lt.intensity += intensity_increase;
             fly_count++;
         }
-            
+
+        dl.dim();
     }
 }

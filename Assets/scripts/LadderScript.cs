@@ -33,7 +33,7 @@ public class LadderScript : MonoBehaviour {
 	
 	void OnTriggerStay2D(Collider2D other)
 	{
-		Debug.Log ("STAY");
+		//Debug.Log ("STAY");
 		if (Input.GetKey (KeyCode.UpArrow)) 
 		{
 			ClimbMode();
@@ -42,7 +42,7 @@ public class LadderScript : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		Debug.Log ("IN");
+		//Debug.Log ("IN");
 		if (Input.GetKey (KeyCode.UpArrow)) 
 		{
 			ClimbMode();
@@ -55,7 +55,7 @@ public class LadderScript : MonoBehaviour {
 		//exit climb mode
 		onLadder = false;
 		player.GetComponent<Rigidbody2D>().gravityScale = oldGravity;
-		Debug.Log ("OUT");
+		//Debug.Log ("OUT");
 	}
 
 	void ClimbMode()
