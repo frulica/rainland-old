@@ -40,6 +40,8 @@ namespace Narrate {
         public static bool alwaysLoopAudio;
         public static bool alwaysSingleAudio;
 
+        private PlatformerCharacter2D character; 
+
 #endif
 
         /// <summary>
@@ -47,6 +49,8 @@ namespace Narrate {
         /// the manager is allowed to exist and is referenced by the variable "instance"
         /// </summary>
         void Awake() {
+            character = GameObject.Find("Player").GetComponent<PlatformerCharacter2D>();
+
             if (instance == null) {
                 instance = this;
                 src = this.GetComponent<AudioSource>();
@@ -114,7 +118,10 @@ namespace Narrate {
                 if (clipQueue.Count > 0 || interrupt) {
                     isPlaying = true;
                     if (disableCharacterWhileNarrating && characterController != null)
+                    {
                         characterController.enabled = false;
+                        character.disable();
+                    }
 
                     //keep playing interruptions until there are none
                     while (interrupt) {
@@ -140,7 +147,10 @@ namespace Narrate {
                     if (clipQueue.Count == 0 && !interrupt) {
                         isPlaying = false;
                         if (disableCharacterWhileNarrating && characterController != null)
+                        {
                             characterController.enabled = true;
+                            character.enable();
+                        }
                     }
                 }
                 yield return null;

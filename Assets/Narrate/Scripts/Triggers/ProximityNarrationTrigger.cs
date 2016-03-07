@@ -27,6 +27,7 @@ namespace Narrate {
                                  /// <summary>
                                  /// Logs a warning if there are no triggered-by objects and disables this
                                  /// </summary>
+
         void Awake() {
             if (triggeredBy == null) {
                 Debug.LogWarning("ProximityNarrationTrigger Warning: " + this.gameObject.name +
@@ -39,6 +40,7 @@ namespace Narrate {
         }
 
         IEnumerator DistanceWatch() {
+            
             float timeToTrig = timeInProximityToTrigger;
             if (timeToTrig <= 0)
                 timeToTrig = 0.01f;
@@ -53,8 +55,9 @@ namespace Narrate {
                     delayTimer += 0.33f;
                 else if (timeMustBeConsecutive)
                     delayTimer = 0;
-                yield return new WaitForSeconds(.33f);
+                yield return new WaitForSeconds(.1f);
             }
+
             Trigger();
         }
 
